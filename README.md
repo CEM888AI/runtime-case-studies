@@ -20,6 +20,7 @@ Every claim below is labeled:
 
 | Case study | What it's about | Status |
 |---|---|---|
+| [Cache-stable agent context](./case-study-cache-stable-agent-context.md) | Testing whether a stable task context can improve DeepSeek cache reuse without sacrificing long-run task continuity | EXPERIMENTAL |
 | [Context window bounding](./case-study-context-window-bounding.md) | A "bounded" context window silently expanded to 207 messages; fixed with deterministic selection | TESTED |
 | [Tool-schema scoping](./case-study-tool-schema-scoping.md) | 84 tool schemas (~29.3K tokens) on every call, cut to a task-scoped surface | TESTED |
 | [Completion verification](./case-study-completion-verification.md) | Distinguishing a model's claim of "done" from verified evidence that it happened | TESTED |
