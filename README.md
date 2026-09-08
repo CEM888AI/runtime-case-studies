@@ -28,6 +28,7 @@ Every claim below is labeled:
 | [Exactly-once state](./case-study-exactly-once-state.md) | Making memory writes survive crash/retry without duplication or loss | TESTED |
 | [Cross-provider continuity](./case-study-cross-provider-continuity.md) | Keeping agent state and identity intact across a change of model provider | EXPERIMENTAL |
 | [Identity & ownership isolation](./case-study-identity-ownership-isolation.md) | An explicit authority order for whose state and correction wins | TESTED |
+| [Customer tenancy isolation](./case-study-customer-tenancy-isolation.md) | Live QA as a fresh tenant found owner-era pages rendering the founder's account to customers; fixed with session-verdict guards and re-verified in the customer's browser | TESTED |
 | [Telemetry self-verification](./case-study-telemetry-self-verification.md) | Finding and fixing a bug in the runtime's own measurement of itself | TESTED |
 
 ## Benchmarks
