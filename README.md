@@ -32,6 +32,7 @@ Every claim below is labeled:
 | [Customer tenancy isolation](./case-study-customer-tenancy-isolation.md) | Live QA as a fresh tenant found owner-era pages rendering the founder's account to customers; fixed with session-verdict guards and re-verified in the customer's browser | TESTED |
 | [Telemetry self-verification](./case-study-telemetry-self-verification.md) | Finding and fixing a bug in the runtime's own measurement of itself | TESTED |
 | [Worker spin containment gap](./case-study-worker-spin-containment-gap.md) | Why failure-counting loop guards can't see a worker stuck in a C extension; unbounded per-inference serialization as the trigger; bounded-serialization fix | TESTED |
+| [Verification ledger honest status](./case-study-verification-ledger-honest-status.md) | A ledger that read as 91% "unparseable" had no state for "executed, no claim" — honest negative states as a correctness feature | TESTED |
 
 ## Benchmarks
 
