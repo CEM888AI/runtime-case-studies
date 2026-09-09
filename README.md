@@ -20,6 +20,7 @@ Every claim below is labeled:
 
 | Case study | What it's about | Status |
 |---|---|---|
+| [Provider-neutral AI continuity through MCP](./case-study-mcp-continuity.md) | External hosts retrieving current work state and persisting explicit updates; tested operations, payload findings, and the remaining host lifecycle boundary | TESTED for scoped operations; automatic host-wide continuity EXPLORATORY |
 | [Legacy IBM i autonomous debugging](./case-study-legacy-ibmi-autonomous-debugging.md) | Resuming an interrupted task, repairing a broken legacy 5250 client at the protocol layer, and verifying the fix against a live IBM i 7.5 system | TESTED |
 | [Cache-stable agent context](./case-study-cache-stable-agent-context.md) | Testing whether a stable task context can improve DeepSeek cache reuse without sacrificing long-run task continuity | EXPERIMENTAL |
 | [Context window bounding](./case-study-context-window-bounding.md) | A "bounded" context window silently expanded to 207 messages; fixed with deterministic selection | TESTED |

@@ -1,0 +1,8 @@
+flowchart TD
+    A["AI host with an authorized CEM888 connection"] -->|"Context request"| B["MCP interface"]
+    B --> C["CEM888 continuity and state layer"]
+    C --> D["Current decisions, open work, relevant history and provenance"]
+    D --> E["Host reasoning and permitted actions"]
+    E -.->|"Explicit checkpoint or supported state update"| B
+    C --> F["Persistent work state"]
+    F -->|"Subsequent retrieval"| C
