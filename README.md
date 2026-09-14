@@ -1,8 +1,11 @@
 # CEM888 Runtime — Engineering Case Studies
 
-Sanitized write-ups of real engineering problems found and fixed in CEM888's runtime, with real before/after measurements. This is evidence that the architecture works, not a description of how to reproduce it — CEM888's runtime, memory indexing, tool-governance, and provider-routing implementations stay private. See [What's shown vs. withheld](./architecture.md#whats-shown-vs-whats-withheld).
+> ### ⬅️ This is supporting evidence, not the project.
+> **CEM888** is a local-first, model-agnostic agent runtime — state, identity, authority, and verification that live on your machine and persist across Claude, GPT, DeepSeek, and local models.
+>
+> **→ [cem888.ai](https://cem888.ai)** · [All CEM888 repositories](https://github.com/CEM888AI) · [💗 Sponsor](https://ko-fi.com/cem888ai)
 
-> Part of **[CEM888.AI](https://github.com/CEM888AI)** · flagship overview: **[cem888](https://github.com/CEM888AI/cem888)**
+Sanitized write-ups of real engineering problems found and fixed in CEM888's runtime, with real before/after measurements. This is evidence that the architecture works, not a description of how to reproduce it. See [What's shown vs. withheld](./architecture.md#whats-shown-vs-whats-withheld).
 
 Every claim below is labeled:
 
@@ -40,6 +43,8 @@ Every claim below is labeled:
 
 Reproducible memory-retrieval results with raw data: [CEM888AI/benchmarks](https://github.com/CEM888AI/benchmarks)
 
-## Contact
+---
 
-Chandler Morone — creator@cem888.ai · [cem888.ai](https://cem888.ai)
+**CEM888** — local-first agent runtime. **[cem888.ai](https://cem888.ai)** · [💗 Sponsor](https://ko-fi.com/cem888ai)
+
+Chandler Morone — creator@cem888.ai
