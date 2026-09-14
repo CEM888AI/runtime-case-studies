@@ -2,6 +2,8 @@
 
 Sanitized write-ups of real engineering problems found and fixed in CEM888's runtime, with real before/after measurements. This is evidence that the architecture works, not a description of how to reproduce it — CEM888's runtime, memory indexing, tool-governance, and provider-routing implementations stay private. See [What's shown vs. withheld](./architecture.md#whats-shown-vs-whats-withheld).
 
+> Part of **[CEM888.AI](https://github.com/CEM888AI)** · flagship overview: **[cem888](https://github.com/CEM888AI/cem888)**
+
 Every claim below is labeled:
 
 - **TESTED** — run and measured, with the measurement shown
