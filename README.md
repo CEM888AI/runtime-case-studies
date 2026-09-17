@@ -20,11 +20,13 @@ Every claim below is labeled:
 | [Architecture](./architecture.md) | Conceptual request/turn flow — what's shown, what's withheld |
 | [Engineering capabilities](./capabilities.md) | Technologies, connected to the systems they're used in |
 | [About the engineer](./about.md) | Background, how the system gets built |
+| [Framework-to-runtime architecture evolution](./case-study-framework-to-runtime-architecture-evolution.md) | How the system evolved from LangGraph-based agents to a direct Python/HTTP agent loop and then to the current provider-neutral runtime/control layer |
 
 ## Case studies
 
 | Case study | What it's about | Status |
 |---|---|---|
+| [Framework-to-runtime architecture evolution](./case-study-framework-to-runtime-architecture-evolution.md) | Historical progression from framework-based LangGraph agents → custom direct agent loop → provider-neutral deterministic runtime | TESTED historical implementation evidence |
 | [Provider-neutral AI continuity through MCP](./case-study-mcp-continuity.md) | External hosts retrieving current work state and persisting explicit updates; tested operations, payload findings, and the remaining host lifecycle boundary | TESTED for scoped operations; automatic host-wide continuity EXPLORATORY |
 | [Legacy IBM i autonomous debugging](./case-study-legacy-ibmi-autonomous-debugging.md) | Resuming an interrupted task, repairing a broken legacy 5250 client at the protocol layer, and verifying the fix against a live IBM i 7.5 system | TESTED |
 | [Cache-stable agent context](./case-study-cache-stable-agent-context.md) | Testing whether a stable task context can improve DeepSeek cache reuse without sacrificing long-run task continuity | EXPERIMENTAL |
