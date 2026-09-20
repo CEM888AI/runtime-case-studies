@@ -41,6 +41,10 @@ Every claim below is labeled:
 | [Worker spin containment gap](./case-study-worker-spin-containment-gap.md) | Why failure-counting loop guards can't see a worker stuck in a C extension; unbounded per-inference serialization as the trigger; bounded-serialization fix | TESTED |
 | [Verification ledger honest status](./case-study-verification-ledger-honest-status.md) | A ledger that read as 91% "unparseable" had no state for "executed, no claim" — honest negative states as a correctness feature | TESTED |
 
+| [Why a one-line change to a shipped runtime stalls a release](./case-study-atomic-train-shipped-runtime-changes.md) | A shipped runtime is a sealed artifact declared in several independent places; a reconciling gate between branch and release, and why the fix train has to be atomic | VERIFIED PROCESS |
+| ["Installed and enabled" is not "loaded"](./case-study-installed-and-enabled-is-not-loaded.md) | A plugin present on disk, correctly versioned, byte-identical and switched on — and doing nothing. Declaration is not registration | TESTED |
+| [A product telling its own customers to break its supply-chain rule](./case-study-update-path-forbidden-command.md) | Two correct halves of an upgrade path never introduced to each other; install-method detection falling through to the remote-index default | FIXED — shipped and verified in the published artefact |
+
 ## Benchmarks
 
 Reproducible memory-retrieval results with raw data: [CEM888AI/benchmarks](https://github.com/CEM888AI/benchmarks)
