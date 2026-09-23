@@ -392,7 +392,7 @@ For deeper technical diligence, the appropriate next step is a scoped code revie
 
 ## 16. Current validation status
 
-CEM888 is in active customer-artifact hardening.
+The CEM888 runtime itself is built and operating. The current engineering focus is **customer-install parity, packaging, certification, and proof** so the downloadable artifact faithfully carries the runtime behavior already developed and can prove exactly what it is running.
 
 The partner build is **not** being handed out until the current customer artifact passes the release gates below.
 
@@ -448,7 +448,27 @@ It is to measure whether CEM888 adds enough reliability, continuity, control, or
 
 ---
 
-## 18. Commercial / licensing note
+## 18. Long-term deployment direction
+
+CEM888 is intended to mature into a reliability/control layer for AI systems operating in **data-sensitive and high-consequence environments**, including legal, financial, public-sector, and regulated enterprise deployments.
+
+That direction depends on capabilities such as:
+
+- customer-controlled/private deployment;
+- tenant and identity isolation;
+- explicit action authority;
+- provenance and auditability;
+- evidence-backed verification;
+- recovery and restart continuity;
+- duplicate-effect prevention;
+- provider/model replaceability without losing authoritative state;
+- clearly defined trust and data boundaries.
+
+This is an architectural and product direction, **not a claim that CEM888 is currently certified for any specific legal, banking, government, or regulatory framework**. Sector-specific compliance, assurance, and certification requirements must be evaluated per deployment.
+
+---
+
+## 19. Commercial / licensing note
 
 The community runtime is published under AGPL-3.0.
 
