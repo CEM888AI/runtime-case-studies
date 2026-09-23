@@ -18,6 +18,8 @@ Every claim below is labeled:
 | | |
 |---|---|
 | [Architecture](./architecture.md) | Conceptual request/turn flow — what's shown, what's withheld |
+| [Current engineering status](./current-engineering-status.md) | What is proven on CEM, what is still open, the measured customer-artifact gaps, and the exact partner-release sequence |
+| [Partner technical brief](./partner-technical-brief.md) | Technical partner view: integration boundaries, lifecycle, authority, verification, continuity, and evaluation path |
 | [Engineering capabilities](./capabilities.md) | Technologies, connected to the systems they're used in |
 | [About the engineer](./about.md) | Background, how the system gets built |
 | [Framework-to-runtime architecture evolution](./case-study-framework-to-runtime-architecture-evolution.md) | How the system evolved from LangGraph-based agents to a direct Python/HTTP agent loop and then to the current provider-neutral runtime/control layer |
