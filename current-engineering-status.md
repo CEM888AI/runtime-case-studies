@@ -6,13 +6,13 @@ This page is the current technical status for founders, engineering partners, ev
 
 It exists for one reason: **do not make people infer current product readiness from old benchmark numbers, source files, or architecture diagrams.**
 
-CEM888 is being hardened toward one frozen customer/partner artifact that can prove its own claims.
+The CEM888 runtime itself is built and operating. Current work is focused on **customer-install parity, packaging, certification, and current proof** so the downloadable artifact matches the runtime and can prove exactly what it is running.
 
 ---
 
 ## Executive technical status
 
-The core architecture is implemented far enough that the remaining work is primarily **hardening, promotion into the customer artifact, conformance testing, and current benchmarking** — not inventing the product from scratch.
+The core runtime is built. The remaining release work is primarily **capturing the proven runtime behavior in the customer artifact, closing install-specific gaps, conformance testing, and current benchmarking** — not inventing the product from scratch.
 
 Several important capabilities have been completed and exercised on CEM's own live runtime, including:
 
@@ -22,7 +22,7 @@ Several important capabilities have been completed and exercised on CEM's own li
 - multi-session scratchpad write safety / CAS;
 - native continuity behavior used by CEM's own runtime.
 
-Several other controls are still being hardened before they are promoted and called customer-certified:
+Several controls are still being closed or re-proven before the customer artifact can be called certified:
 
 - deterministic action authority;
 - verification evidence integrity;
@@ -31,7 +31,7 @@ Several other controls are still being hardened before they are promoted and cal
 - mutation-history / provenance reconstruction;
 - authority-aware provider-neutral memory search.
 
-The customer artifact is intentionally being held back from partner handoff until these surfaces are promoted and proven on the installed artifact.
+The customer artifact is intentionally being held back from partner handoff until the installed build matches the runtime contract and passes the same falsifiers on the actual customer machine.
 
 ---
 
