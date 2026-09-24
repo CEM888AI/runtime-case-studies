@@ -46,6 +46,7 @@ Every claim below is labeled:
 | [Why a one-line change to a shipped runtime stalls a release](./case-study-atomic-train-shipped-runtime-changes.md) | A shipped runtime is a sealed artifact declared in several independent places; a reconciling gate between branch and release, and why the fix train has to be atomic | VERIFIED PROCESS |
 | ["Installed and enabled" is not "loaded"](./case-study-installed-and-enabled-is-not-loaded.md) | A plugin present on disk, correctly versioned, byte-identical and switched on — and doing nothing. Declaration is not registration | TESTED |
 | [A product telling its own customers to break its supply-chain rule](./case-study-update-path-forbidden-command.md) | Two correct halves of an upgrade path never introduced to each other; install-method detection falling through to the remote-index default | FIXED — shipped and verified in the published artefact |
+| [A green test suite over dead code: a source edit is not a deploy](./case-study-source-edit-is-not-a-deploy.md) | Three verification and maintenance defects repaired in source while the running process kept serving the old code; the bug's own fingerprint, dated after the edit, was the proof | TESTED (source-level) |
 
 ## Benchmarks
 
