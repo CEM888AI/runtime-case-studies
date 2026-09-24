@@ -1,37 +1,63 @@
 # CEM888 — Current Engineering Status
 
-**Updated: 2026-09-23**
+**Updated: 2026-09-24**
 
 This page is the current technical status for founders, engineering partners, evaluators, and prospective design partners.
 
-It exists for one reason: **do not make people infer current product readiness from old benchmark numbers, source files, or architecture diagrams.**
+It exists for one reason: **do not make people infer current product readiness from an old benchmark, a source file, or a different artifact.**
 
-The CEM888 runtime itself is built and operating. Current work is focused on **customer-install parity, packaging, certification, and current proof** so the downloadable artifact matches the runtime and can prove exactly what it is running.
+CEM888 has three distinct proof surfaces:
+
+1. **CEM engineering runtime / ancestor** — where product-relevant mechanisms are built, falsified, and hardened.
+2. **Public repositories** — documentation, source/evidence, case studies, benchmark artifacts, and public falsifiers.
+3. **Customer product artifact** — the downloadable wheel/bundles that must be frozen and re-proven independently before a customer claim becomes certified.
+
+A mechanism working on CEM is evidence. It is **not automatically proof that the current customer artifact carries the same behavior**.
 
 ---
 
 ## Executive technical status
 
-The core runtime is built. The remaining release work is primarily **capturing the proven runtime behavior in the customer artifact, closing install-specific gaps, conformance testing, and current benchmarking** — not inventing the product from scratch.
+The core state/control architecture is built and operating on the CEM engineering path.
 
-Several important capabilities have been completed and exercised on CEM's own live runtime, including:
+Current release work is concentrated on the customer artifact: closing install-specific authority and concurrency defects, rebuilding the artifact chain, and then re-running conformance on the exact shipped build.
 
-- authority-aware current state and decision supersession;
-- bounded replace-not-append working state;
-- typed active-work lifecycle;
-- multi-session scratchpad write safety / CAS;
-- native continuity behavior used by CEM's own runtime.
+### Proven on the current CEM engineering path
 
-Several controls are still being closed or re-proven before the customer artifact can be called certified:
+The 2026-09-24 CEM ledger records the following live acceptance results after deploy:
 
-- deterministic action authority;
-- verification evidence integrity;
-- complete verification coverage;
-- liveness-with-effect testing for gates;
-- mutation-history / provenance reconstruction;
-- authority-aware provider-neutral memory search.
+- **owner-prohibition / authority path:** 8 passed, 0 failed;
+- **structured verification:** 53 passed, 0 failed;
+- **hook/source synchronization falsifiers:** 17 passed, 0 failed;
+- fabricated-evidence receipt falsifier: 4 passed;
+- consequential-action / `execute_code` bypass matrix: 4 passed plus ordered allow/block controls;
+- cross-process store locking: 4 passed;
+- scratchpad reconcile behavior corrected so the newest current write survives later reconciliation.
 
-The customer artifact is intentionally being held back from partner handoff until the installed build matches the runtime contract and passes the same falsifiers on the actual customer machine.
+These measurements are **CEM engineering-runtime proof**, not customer-install certification.
+
+### Still not certified for the customer artifact
+
+The current customer release lane is not finished.
+
+Two confirmed defects were found directly against the shipped **1.0.10 wheel**:
+
+1. the durable memory writer allowed model-originated writes to acquire user authority through its default/callable authority surface;
+2. fresh-store concurrent writes could fail with `database is locked`, causing a memory write to be lost rather than queued/retried.
+
+Repairs have been exercised in the customer-runtime worktree, but the release chain is not complete yet. The remaining sequence is:
+
+```text
+wire owner-attestation producer
+  -> commit customer-runtime source
+  -> rebuild wheel
+  -> rebuild platform bundles
+  -> re-certify exact artifacts
+  -> publish
+  -> verify shipped bundles
+```
+
+Until that chain passes, the customer artifact is **not represented as fully conformant**.
 
 ---
 
@@ -49,8 +75,8 @@ TURN START
   -> allowed action executes
   -> collect observable evidence
   -> verify claimed outcome
-  -> commit state transition exactly once
-  -> emit receipt
+  -> commit resulting state
+  -> emit receipt / provenance
   -> next turn reconstructs from durable state
 ```
 
@@ -60,176 +86,113 @@ The core invariant is:
 
 The model is replaceable intelligence. It is not the source of truth, permission, or proof.
 
----
-
-## Proven on CEM's current engineering path
-
-### Authoritative current state + supersession
-
-The runtime can represent newer authoritative decisions as current while retaining older decisions as history.
-
-The key falsifier is deliberately adversarial:
-
-1. create Decision A;
-2. later create Decision B that supersedes A;
-3. make A more semantically/lexically similar to a future query;
-4. current-state retrieval must still return B as current;
-5. A may appear only as superseded/history.
-
-**Status:** implemented on the CEM engineering path. Customer-artifact parity still has to be re-proven.
-
-### Bounded working state
-
-The active working surface is treated as a bounded replacement snapshot rather than an append-only transcript.
-
-Current working context is intended to carry only what the next turn still needs: objective, active constraints, current decisions, blockers, pending verification, verified progress, next action, and compact evidence references.
-
-**Status:** implemented on the CEM engineering path. Customer-artifact promotion and long-horizon install proof still required.
-
-### Typed active-work lifecycle
-
-Active work is driven by explicit lifecycle state rather than phrase matching over prose.
-
-Current states such as ACTIVE / UNRESOLVED / PENDING_VERIFICATION / BLOCKED_ON_USER are distinguished from COMPLETED / RESOLVED / VERIFIED / SUPERSEDED / ARCHIVED / HISTORICAL.
-
-**Status:** implemented on the CEM engineering path. Customer-artifact parity still required.
-
-### Multi-session write safety
-
-Concurrent sessions use compare-and-swap / serialization protections rather than blind overwrite of shared working state.
-
-**Status:** implemented on the CEM engineering path. Customer-install concurrency proof still required.
-
----
-
-## Still being hardened on CEM before customer promotion
-
-### Deterministic action authority
-
-The target design is:
+A stronger action-control formulation used in the engineering architecture is:
 
 > **MODELS PROPOSE. STATE RESOLVES. RUNTIME AUTHORIZES. TOOLS EXECUTE. VERIFIER PROVES.**
 
-The remaining work is to finish the bypass audit and prove that consequential actions cannot silently widen their own target, authority, or scope.
+---
 
-**Status:** in progress.
+## Current state / memory behavior
 
-### Verification evidence integrity
+CEM888 does not treat conversation history as authoritative working memory.
 
-A real adversarial test exposed a correctness hole where caller-supplied command output could be treated as evidence strongly enough to produce a verified pass.
+The runtime separates:
 
-The release-blocking fix requires evidence-backed raw bytes / persisted evidence identity rather than trusting model- or caller-supplied stdout.
+- current owner authority;
+- durable identity / invariants;
+- current authoritative state;
+- unfinished active work;
+- bounded compiled working context;
+- durable memory;
+- reusable skills/pathways;
+- historical evidence / receipts.
 
-**Status:** in progress. CEM888 should not claim universal verification coverage until this is closed.
+The critical rule is:
 
-### Verification coverage
+> **Relevance may retrieve a candidate. Relevance does not increase its authority.**
 
-Some action classes are covered, some partial, and some intentionally still open. The public verification-coverage matrix is being completed so evaluators can see the exact boundary.
-
-**Status:** in progress.
-
-### Gate liveness
-
-CEM888 has previously found mechanisms that were installed or registered but had no real effect.
-
-The permanent test pattern is therefore: a gate must demonstrate a real deny, withhold, or other measurable effect — not merely report that it loaded.
-
-**Status:** not complete yet.
-
-### Mutation provenance
-
-The runtime is being hardened so it can mechanically answer not only *what is current*, but *why it changed*, who/what changed it, what it superseded, and which evidence caused the transition.
-
-**Status:** not complete yet.
-
-### Authority-aware deep memory search
-
-The provider-neutral search contract is being completed so semantic/keyword/timeline retrieval cannot elevate stale information into current authority.
-
-**Status:** in progress.
+Superseded material can remain available as history without silently becoming current truth again because it happens to be a strong lexical or semantic match.
 
 ---
 
-## Current customer-artifact baseline
+## Context compilation
 
-The latest measured customer-install baseline was run on an installed customer profile using engine **1.0.9**.
+The active reasoning packet is intended to be a bounded working surface rather than an append-only transcript.
 
-That artifact was intentionally treated as a test subject rather than assumed correct.
+The compiler keeps the minimum current material needed for the next reasoning event: objective, active constraints, current decisions, blockers, pending verification, verified progress, next action, and compact evidence references.
 
-**Result: 2 PASS / 9 FAIL — NON-CONFORMANT.**
+Completed, resolved, superseded, archived, or historical material is removed from ordinary active carry while remaining recoverable from durable storage.
 
-The measured failures included:
-
-- no proven durable exactly-once/idempotency key;
-- no cheap turn-start inhale gate;
-- incomplete authority metadata;
-- schema-fragile memory writer;
-- Chroma/BM25 present but not wired into the automatic inhale compiler;
-- no timeline/FTS retrieval leg;
-- no automatic typed-state exhale writer;
-- provider-neutral operations absent from the installed artifact;
-- broken local MCP serve import.
-
-That artifact is **not** the partner build and is not being represented as certified.
-
-The important result of this test was not the failure count. It was that the install now has a deterministic conformance harness capable of falsifying runtime claims on the artifact itself.
+This is the mechanism behind the product requirement that a user should not have to repeatedly rebuild project state every time the model, host, or session changes.
 
 ---
 
-## Release sequence for the partner/customer build
+## Action authority and owner prohibitions
 
-CEM888 is deliberately avoiding repeated wheel churn.
+Consequential actions are not supposed to inherit authority from model confidence or natural-language plausibility.
 
-The current sequence is:
+An explicit authenticated owner prohibition is intended to govern both sides of the lifecycle:
 
-```text
-finish CEM engineering
-  -> prove/falsify each product-relevant capability on CEM
-  -> freeze the CEM capability set
-  -> promote all customer-relevant fixes in one batch
-  -> build one candidate customer artifact
-  -> freeze artifact + digests
-  -> run install conformance
-  -> run clean install / upgrade tests
-  -> fix only certification defects
-  -> rerun current benchmark suite
-  -> partner handoff
-```
+- **retrieval/current-state side** — prohibited or superseded material must not be surfaced as current authoritative truth;
+- **execution side** — a matching protected action must be denied at a CEM-controlled boundary.
 
-A capability is not considered customer-proven because:
+The host boundary matters. CEM888 can only claim hard enforcement where the host/action actually crosses an enforceable CEM boundary. A host capability outside that boundary must be described as partial / host-restricted rather than universally controlled.
 
-- it exists in source;
-- it works on CEM;
-- a plugin directory exists;
-- the installer says it is enabled.
+---
 
-It is customer-proven only when the **same falsifier passes on the exact installed artifact** and the result names the build/digests being tested.
+## Verification and receipts
+
+CEM888 does not treat a model saying "done" as proof.
+
+The current CEM verification path has been hardened against a real fabricated-evidence failure class: caller/model-supplied output cannot simply promote itself into verified truth. The current CEM structured-verification suite is passing on the engineering runtime, but verification coverage is still action-class-specific and must be re-proven on the customer artifact.
+
+A receipt is provenance/evidence. It is not independent certification.
+
+---
+
+## Customer-artifact history
+
+### Earlier 1.0.9 baseline
+
+An earlier installed customer artifact was intentionally tested rather than assumed correct.
+
+**Published result: 2 PASS / 9 FAIL — NON-CONFORMANT.**
+
+That baseline was useful because it proved the release process could falsify its own runtime claims. It should not be read as the status of the current engineering runtime.
+
+### Current 1.0.10 release lane
+
+The shipped 1.0.10 wheel has since exposed the two install-surface defects described above: memory-authority attribution and fresh-store concurrent-write loss.
+
+The fixes must be promoted into a rebuilt exact artifact and then re-tested. A green source test is not a shipped fix.
+
+---
+
+## Public proof vs. internal proof vs. customer proof
+
+CEM888 is deliberately separating these claims:
+
+| Surface | What it can prove |
+|---|---|
+| **Live CEM engineering runtime** | Whether the mechanism works on the ancestor/runtime currently being hardened |
+| **Public source + public falsifiers** | Whether a reviewer can inspect and run scoped checks against the public tree |
+| **Frozen customer artifact** | Whether the exact wheel/bundle a customer receives satisfies the release contract |
+
+The public `cem888` repository is being updated with runnable source-level falsifiers for authority and context invariants. Those tests improve external reviewability, but they do not replace exact-artifact certification.
 
 ---
 
 ## Benchmark status
 
-Earlier benchmark and case-study results remain useful historical engineering evidence, but the runtime has changed substantially since those runs.
+Historical benchmark runs remain engineering evidence, but benchmark proof is being tightened so the repository distinguishes:
 
-A current re-baseline is planned against the frozen partner/customer artifact.
+- scorecard arithmetic that can be independently recomputed;
+- raw-answer scoring utilities;
+- the original live-agent generation environment, which a scorecard checker alone does not recreate.
 
-The new benchmark campaign will compare, on the same workload:
+For BEAM, the public Vetta 77.2% scorecard is the independently checkable result currently shipped. The CEM 78.2% run remains labeled experimental until equivalent per-question public evidence is present.
 
-- verified task success;
-- false-completion rate;
-- repeated tool/action work;
-- model/generative call count;
-- input/output tokens where available;
-- actual inference spend;
-- retries;
-- human intervention/review;
-- latency;
-- restart/fresh-session continuity;
-- cost per verified successful task.
-
-Where context/state improvements are being tested, a **static-context control arm** will be included so CEM888 does not take credit for improvements caused merely by giving the model a better prompt.
-
-No new cost-reduction percentage will be promoted until it is measured on the frozen current artifact.
+A new runtime benchmark campaign should be run again against the frozen customer candidate after the release artifact is rebuilt.
 
 ---
 
@@ -238,8 +201,8 @@ No new cost-reduction percentage will be promoted until it is measured on the fr
 1. [Partner Technical Brief](./partner-technical-brief.md) — integration boundaries without implementation secrets.
 2. [Architecture](./architecture.md) — conceptual runtime/turn flow and what is deliberately withheld.
 3. [Engineering Case Studies](./README.md) — measured failures, fixes, and historical evidence.
-4. [Benchmarks](https://github.com/CEM888AI/benchmarks) — raw benchmark repository; current re-baseline pending.
-5. [CEM888 source repository](https://github.com/CEM888AI/cem888) — public source and license.
+4. [Benchmarks](https://github.com/CEM888AI/benchmarks) — public benchmark artifacts and scorecards.
+5. [CEM888 source repository](https://github.com/CEM888AI/cem888) — public source, status, and license.
 
 ---
 
@@ -247,8 +210,8 @@ No new cost-reduction percentage will be promoted until it is measured on the fr
 
 Technical discovery, architecture review, and targeted integration planning are welcome now.
 
-The customer installer is being held until the frozen candidate build passes the current conformance and benchmark gates.
+The customer release claim remains gated on the rebuilt artifact passing its own conformance checks.
 
 That is deliberate.
 
-A partner should receive the build that can **prove what it does**, not one that merely appears operational.
+A partner should receive a build that can **prove what it does**, not one that merely appears operational.

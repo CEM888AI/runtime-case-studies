@@ -50,7 +50,7 @@ Every claim below is labeled:
 
 ## Benchmarks
 
-Reproducible memory-retrieval results with raw data: [CEM888AI/benchmarks](https://github.com/CEM888AI/benchmarks)
+Public benchmark artifacts, raw result files, and scorecard verification: [CEM888AI/benchmarks](https://github.com/CEM888AI/benchmarks)
 
 ---
 

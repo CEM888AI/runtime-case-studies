@@ -1,7 +1,6 @@
-# CEM / CEM888 — Partner Technical Brief
+# CEM888 — Partner Technical Brief
 
-**CEM = Context Engineering Management**  
-**CEM888 = the underlying runtime**
+**CEM888 is the local-first state and control runtime underneath AI agents.**
 
 This document is written for technical partners evaluating how CEM888 can sit underneath or beside an existing agent system.
 
