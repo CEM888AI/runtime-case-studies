@@ -1,6 +1,6 @@
 # CEM888 — Current Engineering Status
 
-**Updated: 2026-09-24**
+**Updated: 2026-10-01**
 
 This page is the current technical status for founders, engineering partners, evaluators, and prospective design partners.
 
@@ -36,9 +36,18 @@ The 2026-09-24 CEM ledger records the following live acceptance results after de
 
 These measurements are **CEM engineering-runtime proof**, not customer-install certification.
 
+
+### Fresh-install customer evidence — 2026-10-01
+
+A newly installed customer agent completed a first-boot acceptance run without manual repair during the test. The tested path demonstrated durable typed-state writes, automatic exhale, two genuine fresh-process restarts with continuity, explicit supersession, active BM25/vector/FTS/vault retrieval surfaces, an evidence-verified file write, duplicate/retry deduplication, and completed-work recovery after restart.
+
+The run also found defects and therefore is **not** promoted as full customer certification: duplicate active current-decision state, a path-sensitive silent-zero hybrid retrieval route, shared-root residue, MCP stdio banner noise, a dead duplicate Chroma lane, memory/open-work classification hygiene issues, and a doctor false negative.
+
+Public artifact record: [Fresh-install acceptance — 2026-10-01](https://github.com/CEM888AI/cem888/blob/main/docs/FRESH_INSTALL_ACCEPTANCE_2026-10-01.md).
+
 ### Still not certified for the customer artifact
 
-The current customer release lane is not finished.
+The current customer release lane is not finished. The October 1 fresh-install run materially advanced customer-artifact evidence, but the defects it exposed must be fixed and the same test rerun on a new frozen artifact before promotion to full customer certification.
 
 Two confirmed defects were found directly against the shipped **1.0.10 wheel**:
 
