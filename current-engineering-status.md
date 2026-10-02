@@ -1,6 +1,6 @@
 # CEM888 — Current Engineering Status
 
-**Updated: 2026-10-01**
+**Updated: 2026-10-02**
 
 This page is the current technical status for founders, engineering partners, evaluators, and prospective design partners.
 
@@ -45,28 +45,42 @@ The run also found defects and therefore is **not** promoted as full customer ce
 
 Public artifact record: [Fresh-install acceptance — 2026-10-01](https://github.com/CEM888AI/cem888/blob/main/docs/FRESH_INSTALL_ACCEPTANCE_2026-10-01.md).
 
-### Still not certified for the customer artifact
+### Release lane advanced — 1.0.41 is cut, frozen, and re-exercised
 
-The current customer release lane is not finished. The October 1 fresh-install run materially advanced customer-artifact evidence, but the defects it exposed must be fixed and the same test rerun on a new frozen artifact before promotion to full customer certification.
+The customer artifact has moved since the October 1 run. The current frozen artifact is:
 
-Two confirmed defects were found directly against the shipped **1.0.10 wheel**:
+| | |
+|---|---|
+| Artifact | `cem888_agent-1.0.41-py3-none-any.whl` |
+| Size | 3,963,252 bytes |
+| SHA-256 | `0d090610d74ebaa56edaf5ebb7a0efc568f26b859f2cd23e26b30f43350f9d5a` |
+| Release commit | `5342bac3` — *"cut 1.0.41 — the locale codec that silently rewrote UTF-8, and a gate that cannot forget it"* |
+| Deployed | 2026-10-01, health-checked at that revision |
 
-1. the durable memory writer allowed model-originated writes to acquire user authority through its default/callable authority surface;
-2. fresh-store concurrent writes could fail with `database is locked`, causing a memory write to be lost rather than queued/retried.
+**The class 1.0.41 closes.** On a process without UTF-8 mode, `subprocess(text=True)` and `open()` / `read_text()` / `write_text()` default to the **locale** codec — cp1252 on Windows — while this pipeline writes UTF-8. Reading UTF-8 as cp1252 either raises on one of the five undefined bytes or silently returns mojibake. Writes are worse: `open(path, "w")` truncates to zero bytes *before* writing, so a raise destroys the previous content too. Three of the four affected sites sit on the path that carries a hook's text into the model's context — which is exactly where the mojibake was first observed. **16 sites repaired across the installer plugin payload and three engine modules; 0 remain.**
 
-Repairs have been exercised in the customer-runtime worktree, but the release chain is not complete yet. The remaining sequence is:
+**The durable part is the guard, not the fix.** The release gate **parses** each call rather than grepping lines, because the `encoding=` keyword is frequently on a *later* line of the same call — which is precisely how this class survived three separately-found defects. The detector carries a decoy self-check, so a detector that stops detecting reports RED rather than passing silently. *A gate that cannot fail proves nothing.*
+
+The earlier release sequence has been executed through artifact rebuild and publish:
 
 ```text
-wire owner-attestation producer
-  -> commit customer-runtime source
-  -> rebuild wheel
-  -> rebuild platform bundles
-  -> re-certify exact artifacts
-  -> publish
-  -> verify shipped bundles
+promote customer-relevant changes together
+  -> rebuild wheel                    [done — 1.0.40 -> 1.0.41]
+  -> rebuild platform bundles         [done]
+  -> freeze artifact + digest         [done — see the table above]
+  -> publish + verify shipped bundle  [done — health-checked at 5342bac3]
+  -> re-run install conformance       [IN PROGRESS — see below]
 ```
 
-Until that chain passes, the customer artifact is **not represented as fully conformant**.
+**Still open, and deliberately not claimed.** The two defects named in the previous status — model-originated memory writes acquiring owner authority, and fresh-store concurrent-write loss — remain open in the engineering record and are **not** represented as fixed on a shipped artifact.
+
+The re-exercise also produced findings that are recorded with their measured mechanism but not yet repaired:
+
+- finished current-state entries that do not decay, because the decay predicate is glyph-exact while the seeded example teaches no glyph;
+- a seeded capacity figure in the installer that disagrees with the engine's own limit;
+- a current-truth uniqueness gap: several decisions can be simultaneously current with no supersession inference, so superseded material can return as current.
+
+Until the remaining items are fixed and the *same* acceptance test re-runs unchanged on a newly frozen artifact, the customer artifact is **not represented as fully conformant**.
 
 ---
 
@@ -169,11 +183,11 @@ An earlier installed customer artifact was intentionally tested rather than assu
 
 That baseline was useful because it proved the release process could falsify its own runtime claims. It should not be read as the status of the current engineering runtime.
 
-### Current 1.0.10 release lane
+### Release lane 1.0.38 -> 1.0.41
 
-The shipped 1.0.10 wheel has since exposed the two install-surface defects described above: memory-authority attribution and fresh-store concurrent-write loss.
+The 1.0.38 artifact was the one exercised in the October 1 acceptance run; it exposed the install-surface defects described above (memory-authority attribution, fresh-store concurrent-write loss).
 
-The fixes must be promoted into a rebuilt exact artifact and then re-tested. A green source test is not a shipped fix.
+The lane has since cut **1.0.41** — a locale-codec class repair plus a parser-based release guard — and that artifact is now the frozen, digest-named customer candidate. A green source test is still not a shipped fix, which is why the artifact above is named by hash and the remaining items are held open rather than declared closed.
 
 ---
 
