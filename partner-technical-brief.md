@@ -469,7 +469,7 @@ This is an architectural and product direction, **not a claim that CEM888 is cur
 
 ## 19. Commercial / licensing note
 
-The community runtime is published under the **Elastic License 2.0 (ELv2)** — source-available, never converts into an open-source license.
+The community runtime is published under the **CEM888 Source-Available Commercial License** — source-available, free for personal, non-commercial use, never converts into an open-source license.
 
 A proprietary embedding, white-label, closed distribution, hosted integration, OEM arrangement, or other commercial partnership can be handled under a separate negotiated commercial license.
 
