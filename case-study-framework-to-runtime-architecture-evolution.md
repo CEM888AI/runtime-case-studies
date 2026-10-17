@@ -2,7 +2,7 @@
 
 **Status: TESTED — historical implementation evidence exists across private repositories and the current public runtime.**
 
-> This is a sanitized architecture-history case study. It documents the progression of real systems Chandler Morone built while developing CEM888. Legacy implementation repositories remain private; the current flagship runtime is public at [CEM888AI/cem888](https://github.com/CEM888AI/cem888).
+> This is a sanitized architecture-history case study. It documents the progression of real systems Chandler Morone built while developing CEM888. Legacy implementation repositories remain private, and the current runtime source is private as well; the public evidence for it lives in this repository and in [CEM888AI/benchmarks](https://github.com/CEM888AI/benchmarks).
 
 ## Why this matters
 
@@ -77,7 +77,7 @@ The model is now a reasoning driver inside a larger system rather than the holde
 
 See the current public implementation and architecture evidence:
 
-- [CEM888 runtime](https://github.com/CEM888AI/cem888)
+- [CEM888 — current engineering status](./current-engineering-status.md)
 - [Architecture](./architecture.md)
 - [Completion verification](./case-study-completion-verification.md)
 - [Exactly-once state](./case-study-exactly-once-state.md)

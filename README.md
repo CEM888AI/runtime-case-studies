@@ -3,7 +3,7 @@
 > ### ⬅️ This is supporting evidence, not the project.
 > **CEM888** is a local-first, model-agnostic agent runtime — state, identity, authority, and verification that live on your machine and persist across Claude, GPT, DeepSeek, and local models.
 >
-> **→ The project: [CEM888AI/cem888](https://github.com/CEM888AI/cem888)** — ⭐ star it · [cem888.ai](https://cem888.ai) · [💗 Sponsor](https://ko-fi.com/cem888ai)
+> **→ The product: [cem888.ai](https://cem888.ai)** — create a free account and download for your machine · [Current engineering status](./current-engineering-status.md) · [💗 Sponsor](https://ko-fi.com/cem888ai)
 
 Sanitized write-ups of real engineering problems found and fixed in CEM888's runtime, with real before/after measurements. This is evidence that the architecture works, not a description of how to reproduce it. See [What's shown vs. withheld](./architecture.md#whats-shown-vs-whats-withheld).
 
@@ -42,7 +42,8 @@ Every claim below is labeled:
 | [Customer tenancy isolation](./case-study-customer-tenancy-isolation.md) | Live QA as a fresh tenant found owner-era pages rendering the founder's account to customers; fixed with session-verdict guards and re-verified in the customer's browser | TESTED |
 | [Telemetry self-verification](./case-study-telemetry-self-verification.md) | Finding and fixing a bug in the runtime's own measurement of itself | TESTED |
 | [Worker spin containment gap](./case-study-worker-spin-containment-gap.md) | Why failure-counting loop guards can't see a worker stuck in a C extension; unbounded per-inference serialization as the trigger; bounded-serialization fix | TESTED |
-| [Verification ledger honest status](./case-study-verification-ledger-honest-status.md) | A ledger that read as 91% "unparseable" had no state for "executed, no claim" — honest negative states as a correctness feature | TESTED |\n| [When the test was wrong, the agent tested the test](./case-study-testing-the-test-state-grounded-evaluation.md) | A flawed external AI acceptance test mixed false failures with real defects; the CEM888 engineering agent rejected the bad assumptions, preserved the real failures, found two more defects, and protected the frozen release under test | TESTED INCIDENT |
+| [Verification ledger honest status](./case-study-verification-ledger-honest-status.md) | A ledger that read as 91% "unparseable" had no state for "executed, no claim" — honest negative states as a correctness feature | TESTED |
+| [When the test was wrong, the agent tested the test](./case-study-testing-the-test-state-grounded-evaluation.md) | A flawed external AI acceptance test mixed false failures with real defects; the CEM888 engineering agent rejected the bad assumptions, preserved the real failures, found two more defects, and protected the frozen release under test | TESTED INCIDENT |
 
 | [Why a one-line change to a shipped runtime stalls a release](./case-study-atomic-train-shipped-runtime-changes.md) | A shipped runtime is a sealed artifact declared in several independent places; a reconciling gate between branch and release, and why the fix train has to be atomic | VERIFIED PROCESS |
 | ["Installed and enabled" is not "loaded"](./case-study-installed-and-enabled-is-not-loaded.md) | A plugin present on disk, correctly versioned, byte-identical and switched on — and doing nothing. Declaration is not registration | TESTED |
@@ -55,6 +56,6 @@ Public benchmark artifacts, raw result files, and scorecard verification: [CEM88
 
 ---
 
-**CEM888** — local-first agent runtime. **[⭐ Star the repo](https://github.com/CEM888AI/cem888)** · [cem888.ai](https://cem888.ai) · [💗 Sponsor](https://ko-fi.com/cem888ai)
+**CEM888** — local-first agent runtime. **[cem888.ai](https://cem888.ai)** · **[Current engineering status](./current-engineering-status.md)** · [💗 Sponsor](https://ko-fi.com/cem888ai)
 
 Chandler Morone — creator@cem888.ai

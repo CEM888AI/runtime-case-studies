@@ -1,6 +1,6 @@
 # CEM888 — Current Engineering Status
 
-**Updated: 2026-10-02**
+**Updated: 2026-10-17**
 
 This page is the current technical status for founders, engineering partners, evaluators, and prospective design partners.
 
@@ -9,7 +9,7 @@ It exists for one reason: **do not make people infer current product readiness f
 CEM888 has three distinct proof surfaces:
 
 1. **CEM engineering runtime / ancestor** — where product-relevant mechanisms are built, falsified, and hardened.
-2. **Public repositories** — documentation, source/evidence, case studies, benchmark artifacts, and public falsifiers.
+2. **Public repositories** — documentation, case studies, benchmark artifacts, current status, and public falsifiers. The runtime source itself is **private**; source access is granted to licensees and design partners rather than published.
 3. **Customer product artifact** — the downloadable wheel/bundles that must be frozen and re-proven independently before a customer claim becomes certified.
 
 A mechanism working on CEM is evidence. It is **not automatically proof that the current customer artifact carries the same behavior**.
@@ -20,7 +20,34 @@ A mechanism working on CEM is evidence. It is **not automatically proof that the
 
 The core state/control architecture is built and operating on the CEM engineering path.
 
-Current release work is concentrated on the customer artifact: closing install-specific authority and concurrency defects, rebuilding the artifact chain, and then re-running conformance on the exact shipped build.
+Current release work is concentrated on the customer artifact: closing install-specific authority and concurrency defects, rebuilding the artifact chain, and then re-running conformance on the exact shipped build. Alongside that, the product has moved from a single download to **two lanes plus a desktop application** — see the product status below.
+
+## Product status — 2026-10-17
+
+CEM888 ships two lanes from one build pipeline: a **free agent download**, and a **paid lane** carrying the agent plus the **CEM888 Workspace** desktop app. Each lane has its own installer, manifest and artifact verification.
+
+Status is per capability. **Shipped** means implemented and released in a product lane. **In progress** means open work with a known defect — it is not claimed complete. **Planned** means designed, not built.
+
+| Capability | Status | Notes |
+|---|---|---|
+| Installer — free lane | **Shipped** | Account flow at cem888.ai; artifact verification is fail-closed, and a rebuild no longer serves a poisoned verification cache |
+| Installer — paid lane | **Shipped** | Own installer and manifest; the Workspace is built into the paid bundle and launched on first install |
+| CEM888 Workspace (desktop app) | **Shipped** | Tauri + React; Control Room, plus Rooms for State / Decisions / Writes / Receipts / Connections / Agents / Settings |
+| Chat host selection | **Shipped** | Claude / Codex / DeepSeek on separate per-host threads; Codex drives a shared app-server daemon rather than cold-spawning one process per message |
+| Streaming chat parity | **In progress** | Token streaming, activity line, steer, stop, pin |
+| Receipts — hash | **Shipped** | Dedicated panel; fail-closed receipt binding |
+| Receipts — tool | **Shipped** | Dedicated panel; tool receipts and memory disposition ship in the paid agent payload |
+| Checkpoints | **Shipped** (API) · **In progress** (browser) | The customer API can open *and* close a checkpoint; the full checkpoints browser surface is still open |
+| Connections / provider catalog | **Shipped** | Live probes per provider; GitHub is a first-class row with a real connectivity probe |
+| Credential storage | **Shipped** | OS-native credential storage, never a plaintext `.env` |
+| Provider connections — subscriptions | **Partially shipped** | Server half of the subscription OAuth device-code flow is implemented; provider parity for the Claude-only and Codex lanes inside the Workspace terminal is **in progress** |
+| Persistent state | **Shipped** | SQLite as local durable truth; typed lifecycle and explicit supersession; typed active-work state driven by lifecycle events rather than prose. Multi-session write safety uses lock / compare-and-swap; contention behaviour is still under repair |
+| Agent extensibility | **Shipped** | Plugin/skill packaging with an owner hard-NO gate; typed primitive contracts across Connections → Missions → Activity → Outputs → Evaluations |
+| Update merging | **Shipped** (additive) · **Deferred** (three-way) | The update path is additive and retains local work; the agent lane receives engine updates through the paid carrier. Three-way merge and receive-only paid update controls remain open |
+| Mobile live-remote workspace | **In progress** | Phone operating the live workspace over a private mesh; not shipped |
+| Turn-truth contract | **In progress** | Every turn self-proving from the app through the runtime and back; not shipped |
+
+Two things this table does **not** claim: that a mechanism proven on the engineering runtime is certified on the shipped customer artifact, and that any in-progress row is complete.
 
 ### Proven on the current CEM engineering path
 
@@ -43,19 +70,20 @@ A newly installed customer agent completed a first-boot acceptance run without m
 
 The run also found defects and therefore is **not** promoted as full customer certification: duplicate active current-decision state, a path-sensitive silent-zero hybrid retrieval route, shared-root residue, MCP stdio banner noise, a dead duplicate Chroma lane, memory/open-work classification hygiene issues, and a doctor false negative.
 
-Public artifact record: [Fresh-install acceptance — 2026-10-01](https://github.com/CEM888AI/cem888/blob/main/docs/FRESH_INSTALL_ACCEPTANCE_2026-10-01.md).
+Public artifact record: fresh-install acceptance — 2026-10-01. The full record is held in the private runtime repository; the paragraph above is the public statement of it.
 
-### Release lane advanced — 1.0.41 is cut, frozen, and re-exercised
+### Release lane advanced — the line is now 1.0.46
 
-The customer artifact has moved since the October 1 run. The current frozen artifact is:
+The customer artifact has moved well past the October 1 run. **1.0.41** was the frozen candidate that closed the locale-codec class; the current release line is **1.0.46** (2026-10-15), which republished the runtime source from the live customer runtime — 83 files advanced, none added or removed — and corrected a public conformance suite that had been asserting a contract this engine does not have.
 
 | | |
 |---|---|
-| Artifact | `cem888_agent-1.0.41-py3-none-any.whl` |
-| Size | 3,963,252 bytes |
-| SHA-256 | `0d090610d74ebaa56edaf5ebb7a0efc568f26b859f2cd23e26b30f43350f9d5a` |
-| Release commit | `5342bac3` — *"cut 1.0.41 — the locale codec that silently rewrote UTF-8, and a gate that cannot forget it"* |
-| Deployed | 2026-10-01, health-checked at that revision |
+| Current release line | **v1.0.46** (2026-10-15) |
+| Earlier frozen candidate | `cem888_agent-1.0.41-py3-none-any.whl` — 3,963,252 bytes · SHA-256 `0d090610d74ebaa56edaf5ebb7a0efc568f26b859f2cd23e26b30f43350f9d5a` · release commit `5342bac3` |
+| Current artifact digest | Recorded with the artifact in the private runtime repository. The digest is the release identity; a version label alone is not |
+| Public conformance | **15 / 15 passing**, with two falsifier runs confirmed to turn the suite red |
+
+The 1.0.41 digest is retained deliberately: it is the artifact named by hash, and it stays named.
 
 **The class 1.0.41 closes.** On a process without UTF-8 mode, `subprocess(text=True)` and `open()` / `read_text()` / `write_text()` default to the **locale** codec — cp1252 on Windows — while this pipeline writes UTF-8. Reading UTF-8 as cp1252 either raises on one of the five undefined bytes or silently returns mojibake. Writes are worse: `open(path, "w")` truncates to zero bytes *before* writing, so a raise destroys the previous content too. Three of the four affected sites sit on the path that carries a hook's text into the model's context — which is exactly where the mojibake was first observed. **16 sites repaired across the installer plugin payload and three engine modules; 0 remain.**
 
@@ -187,7 +215,7 @@ That baseline was useful because it proved the release process could falsify its
 
 The 1.0.38 artifact was the one exercised in the October 1 acceptance run; it exposed the install-surface defects described above (memory-authority attribution, fresh-store concurrent-write loss).
 
-The lane has since cut **1.0.41** — a locale-codec class repair plus a parser-based release guard — and that artifact is now the frozen, digest-named customer candidate. A green source test is still not a shipped fix, which is why the artifact above is named by hash and the remaining items are held open rather than declared closed.
+The lane cut **1.0.41** — a locale-codec class repair plus a parser-based release guard — and then advanced to **1.0.46**, republished from the live customer runtime. A green source test is still not a shipped fix, which is why artifacts are named by digest and the remaining items are held open rather than declared closed.
 
 ---
 
@@ -198,10 +226,10 @@ CEM888 is deliberately separating these claims:
 | Surface | What it can prove |
 |---|---|
 | **Live CEM engineering runtime** | Whether the mechanism works on the ancestor/runtime currently being hardened |
-| **Public source + public falsifiers** | Whether a reviewer can inspect and run scoped checks against the public tree |
+| **Published falsifiers + public evidence** | Whether a reviewer can inspect the published checks and their reported results |
 | **Frozen customer artifact** | Whether the exact wheel/bundle a customer receives satisfies the release contract |
 
-The public `cem888` repository is being updated with runnable source-level falsifiers for authority and context invariants. Those tests improve external reviewability, but they do not replace exact-artifact certification.
+Runnable falsifiers for authority and context invariants are reported publicly with their results and method. They improve external reviewability, but they do not replace exact-artifact certification.
 
 ---
 
@@ -225,7 +253,7 @@ A new runtime benchmark campaign should be run again against the frozen customer
 2. [Architecture](./architecture.md) — conceptual runtime/turn flow and what is deliberately withheld.
 3. [Engineering Case Studies](./README.md) — measured failures, fixes, and historical evidence.
 4. [Benchmarks](https://github.com/CEM888AI/benchmarks) — public benchmark artifacts and scorecards.
-5. [CEM888 source repository](https://github.com/CEM888AI/cem888) — public source, status, and license.
+5. **CEM888 runtime source** — private. Source access for audit is granted to licensees and design partners; licensing terms are published in [CEM888AI/legal](https://github.com/CEM888AI/legal).
 
 ---
 
