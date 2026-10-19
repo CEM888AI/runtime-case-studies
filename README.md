@@ -1,3 +1,5 @@
+> **Licence: [CEM888 Source-Available Commercial License](./LICENSE) — commercial, source-available, NOT open source.** Free for personal, non-commercial use only; business production use, paid client work, embedding, resale, white-labeling, OEM distribution and hosted/managed service all require a paid licence from CEM Unlimited LLC — creator@cem888.ai. This applies to **every** release in this repository: no CEM888 release has ever been published under an open-source licence.
+
 # CEM888 Runtime — Engineering Case Studies
 
 > ### ⬅️ This is supporting evidence, not the project.
